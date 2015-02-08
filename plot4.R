@@ -1,17 +1,24 @@
-library(sqldf)
+#load package dplyr
+library(dplyr)
 
 
-
+#download, open and subset data
 download.file(url="https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip", destfile="download.zip", method="curl")
 unzip("download.zip")
-data.sub <- read.csv.sql("household_power_consumption.txt", header=TRUE, sep=";", sql="Select * from file where Date = '1/2/2007' OR Date = '2/2/2007'")
+data <- read.csv("household_power_consumption.txt", header=TRUE, sep=";",  stringsAsFactor = FALSE)
+sel <- c("1/2/2007", "2/2/2007")
+data.sub <- filter(data, Date %in% sel)
+
+#conbvert to numeric
 data.sub[,3] <- as.numeric(data.sub[,3])
 data.sub[,4] <- as.numeric(data.sub[,4])
-data.sub[,3] <- as.numeric(data.sub[,5])
+data.sub[,5] <- as.numeric(data.sub[,5])
 data.sub[,7] <- as.numeric(data.sub[,7])
 data.sub[,8] <- as.numeric(data.sub[,8])
 data.sub[,9] <- as.numeric(data.sub[,9])
 
+
+#plot data
 png("plot4.png")
 par(mfrow = c(2,2))
 
