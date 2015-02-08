@@ -1,4 +1,4 @@
-#load package
+#open sqldf package
 library(sqldf)
 
 
@@ -9,6 +9,8 @@ data.sub <- read.csv.sql("household_power_consumption.txt", header=TRUE, sep=";"
 
 data.sub[,3] <- as.numeric(data.sub[,3])
 
-png("plot1.png")
-hist(data.sub[,3], col = "red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
+png("plot2.png")
+plot(data.sub[,3], type="n", xaxt="n", ylab="Global Active Power (kilowatts)", xlab="")
+lines(data.sub[,3], type="l")
+axis(1, at= c(1,1440,2880), labels=c("Thu", "Fri", "Sat"))
 dev.off()
